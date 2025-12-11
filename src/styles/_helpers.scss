@@ -5,10 +5,19 @@
   width: 100%;
   max-width: 1300px;
   margin: 0 auto;
+  padding: 0 variables.$size-small;
+
+  @include variables.respond-to("tablet") {
+    padding: 0 variables.$size-medium;
+  }
 }
 
 .with-app-header {
-  padding-top: 4rem !important;
+  padding-top: 7rem !important;
+
+  @include variables.respond-to("tablet") {
+    padding-top: 4rem !important;
+  }
 }
 
 // Flex

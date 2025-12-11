@@ -41,6 +41,8 @@ function App() {
     show: false,
   });
 
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   //TODO FOR NEXT UPDATE SAVE THIS IN STORAGE
   const [timings, setTimings] = useState<Timings>(
     {
@@ -392,6 +394,8 @@ function App() {
         scanningPaused={scanningPaused}
         UserCheckIcon={UserCheckIcon}
         UserUncheckIcon={UserUncheckIcon}
+        sidebarOpen={sidebarOpen}
+        setSidebarOpen={setSidebarOpen}
       ></Searching>;
       break;
     }
@@ -420,6 +424,8 @@ function App() {
           currentTimings={timings}
           whitelistedUsers={state.status === "scanning" ? state.whitelistedResults : loadWhitelist()}
           onWhitelistUpdate={onWhitelistUpdate}
+          sidebarOpen={sidebarOpen}
+          setSidebarOpen={setSidebarOpen}
         ></Toolbar>
 
         {markup}
@@ -433,7 +439,7 @@ function App() {
 if (location.hostname !== INSTAGRAM_HOSTNAME) {
   alert("Can be used only on Instagram routes");
 } else {
-  document.title = "InstagramUnfollowers";
+  document.title = "EnhancedInstagramUnfollowers";
   document.body.innerHTML = "";
   render(<App />, document.body);
 }

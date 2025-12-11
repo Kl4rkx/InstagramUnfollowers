@@ -20,3 +20,47 @@ $size-xlarge: 2rem;
 // Borders
 $border-radius: 8px;
 $border-color: $clr-border;
+
+// Responsive Breakpoints (Mobile-first approach)
+$mobile-sm: 320px;    // Small mobile
+$mobile-md: 375px;    // Standard mobile (iPhone)
+$mobile-lg: 430px;    // Large mobile (iPhone 14 Pro Max)
+$tablet: 768px;       // iPad, tablets
+$desktop: 1024px;     // Desktop
+$desktop-lg: 1440px;  // Large desktop
+
+// Media Query Mixins
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == "mobile-sm" {
+    @media (min-width: $mobile-sm) { @content; }
+  }
+  @else if $breakpoint == "mobile-md" {
+    @media (min-width: $mobile-md) { @content; }
+  }
+  @else if $breakpoint == "mobile-lg" {
+    @media (min-width: $mobile-lg) { @content; }
+  }
+  @else if $breakpoint == "tablet" {
+    @media (min-width: $tablet) { @content; }
+  }
+  @else if $breakpoint == "desktop" {
+    @media (min-width: $desktop) { @content; }
+  }
+  @else if $breakpoint == "desktop-lg" {
+    @media (min-width: $desktop-lg) { @content; }
+  }
+}
+
+// Responsive Font Sizes (fluid typography)
+@mixin fluid-font($mobile-size, $desktop-size) {
+  font-size: $mobile-size;
+  @include respond-to("tablet") {
+    font-size: clamp($mobile-size, 2vw, $desktop-size);
+  }
+}
+
+// Safe area insets for notched devices
+$safe-area-top: max(0px, env(safe-area-inset-top));
+$safe-area-right: max(0px, env(safe-area-inset-right));
+$safe-area-bottom: max(0px, env(safe-area-inset-bottom));
+$safe-area-left: max(0px, env(safe-area-inset-left));

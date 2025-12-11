@@ -18,9 +18,22 @@ html {
         @include helpers.main-layout;
         display: flex;
         flex-direction: column;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
         
         .overlay {
             color: variables.$clr-white;
+            display: flex;
+            flex-direction: row;
+            flex: 1;
+            overflow: hidden;
+            width: 100%;
+
+            // Mobile: Stack sidebar on top, use drawer behavior
+            @media (max-width: #{variables.$tablet - 1px}) {
+                flex-direction: column;
+            }
         }
 
         .app-header {
@@ -28,17 +41,78 @@ html {
             top: 0;
             left: 0;
             right: 0;
-            height: 4rem;
             background-color: variables.$bg-secondary;
             z-index: 1;
             @extend .flex;
+            flex-direction: column;
+            padding-top: var(--safe-area-top, 0);
+            padding-right: var(--safe-area-right, 0);
+            padding-left: var(--safe-area-left, 0);
+
+            @media (max-width: #{variables.$tablet - 1px}) {
+                height: auto;
+                min-height: 3.5rem;
+            }
+
+            @include variables.respond-to("tablet") {
+                flex-direction: row;
+                height: 4rem;
+                align-items: center;
+            }
 
             &-content {
-                padding: 0 variables.$size-medium;
-                justify-content: space-between;
+                padding: 0.5rem variables.$size-medium;
                 @include helpers.main-layout;
                 @extend .flex;
                 @extend .align-center;
+                gap: 0.5rem;
+                flex: 1;
+                width: 100%;
+                justify-content: space-between;
+
+                @include variables.respond-to("tablet") {
+                    padding: 0 variables.$size-medium;
+                    flex: none;
+                    gap: 1rem;
+                }
+            }
+
+            .menu-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: transparent;
+                border: none;
+                color: variables.$clr-white;
+                font-size: 1.5rem;
+                cursor: pointer;
+                padding: 0.4rem 0.6rem;
+                flex-shrink: 0;
+
+                @include variables.respond-to("tablet") {
+                    display: none;
+                }
+
+                &:hover {
+                    background-color: rgba(255, 255, 255, 0.1);
+                    border-radius: 4px;
+                }
+            }
+
+            .header-actions {
+                display: flex;
+                gap: 0.3rem;
+                align-items: center;
+                width: 100%;
+                flex-wrap: wrap;
+                padding: 0.3rem variables.$size-medium;
+
+                @include variables.respond-to("tablet") {
+                    width: auto;
+                    padding: 0;
+                    flex-wrap: nowrap;
+                    gap: 0.8rem;
+                }
             }
 
             .logo {
@@ -47,9 +121,15 @@ html {
                 gap: variables.$size-small;
                 align-items: center;
                 justify-content: center;
-                font-size: 1rem;
-                letter-spacing: 2px;
+                font-size: 0.85rem;
+                letter-spacing: 1px;
                 cursor: pointer;
+                flex-shrink: 0;
+
+                @include variables.respond-to("tablet") {
+                    font-size: 1rem;
+                    letter-spacing: 2px;
+                }
 
                 .logo-text {
                     display: flex;
@@ -57,34 +137,115 @@ html {
                     justify-content: center;
                     align-items: center;
                     font-weight: 500;
+                    font-size: 0.5rem;
+                    line-height: 1;
+                    gap: 0.1rem;
+
+                    @include variables.respond-to("tablet") {
+                        font-size: 0.75rem;
+                        gap: 0.2rem;
+                    }
+
+                    span {
+                        line-height: 1;
+                    }
                 }
             }
 
             .search-bar {
                 color: variables.$clr-white;
                 border-radius: variables.$border-radius;
-                padding: variables.$size-small;
+                padding: 0.3rem 0.6rem;
                 font-weight: bold;
                 font-family: inherit;
                 background-color: transparent;
                 border: 1px solid variables.$clr-border;
+                font-size: 0.7rem;
+                flex: 1;
+                min-width: 100px;
+                max-width: 150px;
+
+                @include variables.respond-to("mobile-lg") {
+                    font-size: 0.8rem;
+                    max-width: 180px;
+                }
+
+                @include variables.respond-to("tablet") {
+                    padding: variables.$size-small;
+                    font-size: 0.9rem;
+                    max-width: 300px;
+                    flex: none;
+                }
+
+                &::placeholder {
+                    color: rgba(255, 255, 255, 0.5);
+                }
             }
         }
 
         .app-sidebar {
-            position: sticky;
-            top: 0;
-            height: 100vh;
-            min-width: 280px;
-            max-width: 280px;
-            border-inline-end: 1px solid #333;
+            // Mobile: Hidden drawer behavior (will need JS toggle)
+            position: fixed;
+            top: 7rem;
+            left: -280px;
+            height: calc(100vh - 7rem);
+            width: 280px;
+            background-color: variables.$bg-primary;
+            border-right: 1px solid #333;
             display: flex;
             flex-direction: column;
             padding: 0.8rem;
             overflow-y: auto;
             overflow-x: hidden;
             @extend .fs-large;
-            @extend .with-app-header;
+            z-index: 100;
+            transition: left 0.3s ease;
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.5);
+
+            // Mobile: Show when active
+            &.active {
+                left: 0;
+            }
+
+            @include variables.respond-to("tablet") {
+                position: sticky;
+                top: 0;
+                left: 0;
+                height: 100vh;
+                min-width: 280px;
+                max-width: 280px;
+                border-inline-end: 1px solid #333;
+                border-right: none;
+                padding-top: 4rem !important;
+                transition: none;
+                z-index: 1;
+                box-shadow: none;
+            }
+
+            .sidebar-close {
+                display: none;
+                background: none;
+                border: none;
+                color: variables.$clr-white;
+                font-size: 1.5rem;
+                cursor: pointer;
+                padding: 0.5rem;
+                align-self: flex-end;
+                margin-bottom: 0.5rem;
+
+                @media (max-width: #{variables.$tablet - 1px}) {
+                    display: block;
+                }
+
+                @include variables.respond-to("tablet") {
+                    display: none !important;
+                }
+
+                &:hover {
+                    background-color: rgba(255, 255, 255, 0.1);
+                    border-radius: 4px;
+                }
+            }
 
             // Scrollbar styling
             &::-webkit-scrollbar {
@@ -117,6 +278,23 @@ html {
                     margin-bottom: 0.3rem;
                     font-size: 0.85rem;
                 }
+            }
+        }
+
+        // Sidebar backdrop for mobile
+        .sidebar-backdrop {
+            @media (max-width: #{variables.$tablet - 1px}) {
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                bottom: 0 !important;
+                background-color: rgba(0, 0, 0, 0.5) !important;
+                z-index: 98 !important;
+            }
+
+            @include variables.respond-to("tablet") {
+                display: none !important;
             }
         }
 
@@ -156,8 +334,15 @@ html {
         }
 
         input[type='checkbox'] {
-            height: 1.1rem;
-            width: 1.1rem;
+            height: 1rem;
+            width: 1rem;
+            cursor: pointer;
+            flex-shrink: 0;
+
+            @include variables.respond-to("tablet") {
+                height: 1.1rem;
+                width: 1.1rem;
+            }
         }
 
         a {
@@ -183,9 +368,16 @@ html {
                 font-weight: 300;
                 color: variables.$clr-white;
                 background-color: variables.$clr-black;
-                padding: 5px;
+                padding: 0.3rem 0.6rem;
                 border-radius: 5px;
-                @extend .fs-medium;
+                font-size: 0.7rem;
+                white-space: nowrap;
+                flex-shrink: 0;
+
+                @include variables.respond-to("tablet") {
+                    padding: 5px;
+                    font-size: 0.9rem;
+                }
             }
 
             &.run-scan {
@@ -194,16 +386,41 @@ html {
                 left: 50%;
                 top: 50%;
                 transform: translate(-50%, -50%);
-                font-size: 2em;
+                font-size: 1.5em;
                 color: variables.$clr-white;
-                border: 1px solid variables.$clr-white;
-                height: 160px;
-                width: 160px;
+                border: 2px solid variables.$clr-white;
+                height: 120px;
+                width: 120px;
                 border-radius: 50%;
-            }
+                font-weight: bold;
+                transition: all 0.3s ease;
+                padding: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
 
-            &.run-scan:hover {
-                background-color: variables.$bg-secondary;
+                @include variables.respond-to("mobile-lg") {
+                    height: 140px;
+                    width: 140px;
+                    font-size: 1.7em;
+                }
+
+                @include variables.respond-to("tablet") {
+                    height: 160px;
+                    width: 160px;
+                    font-size: 2em;
+                }
+
+                &:active {
+                    transform: translate(-50%, -50%) scale(0.95);
+                    background-color: rgba(255, 255, 255, 0.1);
+                }
+
+                &:hover {
+                    background-color: variables.$bg-secondary;
+                    border-color: variables.$clr-cyan;
+                    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+                }
             }
 
             &.unfollow {
@@ -249,6 +466,26 @@ html {
         .unfollow-log-container {
             @extend .grow;
             @extend .with-app-header;
+            flex: 1;
+            overflow: hidden;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+
+            @include variables.respond-to("tablet") {
+                width: calc(100% - 280px);
+            }
+
+            .tabs-container {
+                flex-shrink: 0;
+                order: -1;
+            }
+
+            .results-list {
+                flex: 1;
+                overflow-y: auto;
+                overflow-x: hidden;
+            }
         }
 
         .results-container {
@@ -257,6 +494,11 @@ html {
                 @extend .m-medium;
                 @extend .p-medium;
                 @extend .fs-xlarge;
+                font-size: 1rem;
+
+                @include variables.respond-to("tablet") {
+                    font-size: 1.5rem;
+                }
             }
 
             .result-item {
@@ -264,10 +506,17 @@ html {
                 cursor: pointer;
                 @extend .flex;
                 @extend .align-center;
-                @extend .p-medium;
+                padding: 0.5rem;
+                gap: 0.5rem;
+
+                @include variables.respond-to("tablet") {
+                    padding: 1rem;
+                    gap: 1rem;
+                }
 
                 .avatar-container {
                     @extend .pos-relative;
+                    flex-shrink: 0;
 
                     &:hover {
                         & .avatar {
@@ -280,8 +529,12 @@ html {
                     }
 
                     .avatar {
-                        width: 75px;
+                        width: 50px;
                         border-radius: 50%;
+
+                        @include variables.respond-to("tablet") {
+                            width: 75px;
+                        }
                     }
 
                     .avatar-icon-overlay-container {
@@ -297,9 +550,13 @@ html {
                     background-color: #49adf4;
                     border-radius: 50%;
                     padding: 0.2rem 0.3rem;
-                    font-size: 0.45em;
+                    font-size: 0.4em;
                     height: fit-content;
                     transform: translateY(-15px);
+
+                    @include variables.respond-to("tablet") {
+                        font-size: 0.45em;
+                    }
                 }
 
                 .private-indicator {
@@ -308,6 +565,11 @@ html {
                     color: #51bb42;
                     font-weight: 500;
                     @extend .p-small;
+                    font-size: 0.75rem;
+
+                    @include variables.respond-to("tablet") {
+                        font-size: 0.85rem;
+                    }
                 }
             }
         }
@@ -318,16 +580,43 @@ html {
 
         .tabs-container {
             @extend .flex;
-            @extend .p-large;
+            padding: 0.3rem;
+            gap: 0.3rem;
+            flex-wrap: nowrap;
+            width: 100%;
+            align-items: stretch;
+
+            @include variables.respond-to("tablet") {
+                padding: 1.5rem;
+                gap: 1rem;
+            }
 
             .tab {
                 color: variables.$clr-gray;
-                border-radius: 8px;
+                border-radius: 4px;
                 cursor: pointer;
                 @extend .grow;
                 @extend .fs-xlarge;
                 @extend .t-center;
-                @extend .p-small;
+                padding: 0.4rem 0.3rem;
+                font-size: 0.65rem;
+                flex: 1;
+                min-width: auto;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+
+                @include variables.respond-to("mobile-lg") {
+                    font-size: 0.75rem;
+                    padding: 0.5rem;
+                }
+
+                @include variables.respond-to("tablet") {
+                    padding: 0.5rem;
+                    font-size: 1rem;
+                    min-width: 100px;
+                    white-space: normal;
+                }
 
                 &-active {
                     color: inherit;

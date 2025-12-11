@@ -17,6 +17,8 @@ interface ToolBarProps {
   setTimings: (timings: Timings) => void;
   whitelistedUsers: readonly UserNode[];
   onWhitelistUpdate: (users: readonly UserNode[]) => void;
+  sidebarOpen: boolean;
+  setSidebarOpen: (open: boolean) => void;
 }
 
 export const Toolbar = ({
@@ -29,6 +31,8 @@ export const Toolbar = ({
   setTimings,
   whitelistedUsers,
   onWhitelistUpdate,
+  sidebarOpen,
+  setSidebarOpen,
 }: ToolBarProps) => {
 
   const [setingMenu, setSettingMenu] = useState(false);
@@ -43,6 +47,14 @@ export const Toolbar = ({
         />
       )}
       <div className="app-header-content">
+        <button
+          className="menu-toggle"
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+          title="Toggle menu"
+          aria-label="Toggle menu"
+        >
+          ☰
+        </button>
         <div
           className="logo"
           onClick={() => {
@@ -67,10 +79,12 @@ export const Toolbar = ({
         >
           <Logo />
           <div className="logo-text">
+            <span>Enhanced</span>
             <span>Instagram</span>
             <span>Unfollowers</span>
           </div>
         </div>
+        <div className="header-actions">
         <button
           className="copy-list"
           onClick={() => {
@@ -169,6 +183,7 @@ export const Toolbar = ({
             onChange={toggleAllUsers}
           />
         )}
+        </div>
       </div>
       {(setingMenu) &&
         <SettingMenu

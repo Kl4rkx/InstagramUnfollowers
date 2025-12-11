@@ -14,6 +14,8 @@ export interface SearchingProps {
   toggleUser: (checked: boolean, user: UserNode) => void;
   UserCheckIcon: React.FC;
   UserUncheckIcon: React.FC;
+  sidebarOpen: boolean;
+  setSidebarOpen: (open: boolean) => void;
 }
 
 export const Searching = ({
@@ -25,6 +27,8 @@ export const Searching = ({
   toggleUser,
   UserCheckIcon,
   UserUncheckIcon,
+  sidebarOpen,
+  setSidebarOpen,
 }: SearchingProps) => {
   if (state.status !== "scanning") {
     return null;
@@ -46,7 +50,29 @@ export const Searching = ({
 
   return (
     <section className="flex">
-      <aside className="app-sidebar">
+      {sidebarOpen && (
+        <div 
+          className="sidebar-backdrop" 
+          onClick={() => setSidebarOpen(false)}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: 98,
+            display: 'none'
+          }}
+        />
+      )}
+      <aside className={`app-sidebar ${sidebarOpen ? 'active' : ''}`}>
+        <button
+          className="sidebar-close"
+          onClick={() => setSidebarOpen(false)}
+          aria-label="Close sidebar"
+        >
+          ✕
+        </button>
         <menu className="flex column m-clear p-clear">
           <p>Filter</p>
           <label className="badge m-small">
@@ -211,7 +237,8 @@ export const Searching = ({
             Whitelisted
           </div>
         </nav>
-        {getCurrentPageUnfollowers(usersForDisplay, state.page).map(user => {
+        <div className="results-list">
+          {getCurrentPageUnfollowers(usersForDisplay, state.page).map(user => {
           const firstLetter = user.username.substring(0, 1).toUpperCase();
           return (
             <>
@@ -287,6 +314,7 @@ export const Searching = ({
             </>
           );
         })}
+        </div>
       </article>
     </section>
   );
