@@ -3,7 +3,10 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Instagram Unfollowers">
   <title>EnhancedInstagramUnfollowers</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/prism.min.js"
     integrity="sha512-UOoJElONeUNzQbbKQbjldDf9MwOHqxNz49NNJJ1d90yp+X9edsHyJoAs6O4K19CZGaIdjI5ohK+O2y5lBTW6uQ=="
@@ -16,6 +19,22 @@
 </head>
 
 <style>
+  html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    height: -webkit-fill-available;
+    background: linear-gradient(135deg, #f5f5f7 0%, #ffffff 100%);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    html {
+      background: linear-gradient(135deg, #1d1d1d 0%, #0a0a0a 100%);
+    }
+  }
+
   * {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Roboto, "Noto Sans", sans-serif !important;
   }
@@ -27,12 +46,17 @@
     align-items: center;
     flex-direction: column;
     margin: 0;
+    padding: 0;
+    width: 100%;
     min-height: 100vh;
+    min-height: 100dvh;
+    min-height: -webkit-fill-available;
     background: linear-gradient(135deg, #f5f5f7 0%, #ffffff 100%);
     padding: 2em 1em;
     box-sizing: border-box;
     color: #1d1d1d;
     transition: background-color 0.3s ease, color 0.3s ease;
+    overflow-x: hidden;
   }
 
   @media (prefers-color-scheme: dark) {
@@ -523,7 +547,7 @@
             <span class="bookmarklet-item-platform">📱 iOS / iPhone / iPad</span>
             <p class="bookmarklet-item-instructions">Tap and hold the link below to add a bookmark (or drag to bookmarks
               bar). Then tap it when Instagram has finished loading.</p>
-            <a id="bookmarklet-link" class="bookmarklet-button" href="#" draggable="true">
+            <a id="bookmarklet-link" class="bookmarklet-button" href="#">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                   d="M5 2H19C19.5523 2 20 2.44772 20 3V22.1433C20 22.4382 19.823 22.7052 19.5521 22.822C19.2812 22.9388 18.9697 22.8943 18.7496 22.7061L12.75 17.5678C12.3499 17.225 11.6501 17.225 11.25 17.5678L5.25044 22.7061C5.03027 22.8943 4.71881 22.9388 4.44789 22.822C4.17702 22.7052 4 22.4382 4 22.1433V3C4 2.44772 4.44772 2 5 2Z"

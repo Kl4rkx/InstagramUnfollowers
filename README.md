@@ -58,6 +58,52 @@ For Android users who want to use it on mobile:
 2. Open Instagram web through the Eruda browser
 3. Follow the same steps as desktop (the console will be automatically available when clicking the eruda icon)
 
+## 📚 How to Use the Bookmarklet
+
+<img src="./assets/bookmarklet.png" alt="Bookmarklet button" />
+
+### 💻 For PC/Desktop (Chrome, Firefox, Edge, Safari)
+
+1. **Drag the link to your bookmarks bar**
+   - Click and drag the "Enhanced Instagram Unfollowers" link to your bookmarks/favorites bar
+   - Release to create the bookmarklet
+
+2. **Open Instagram in your browser**
+   - Go to https://www.instagram.com and wait for it to load completely
+
+3. **Click the bookmarklet**
+   - Open your bookmarks bar and select the bookmarklet you created
+   - The tool will execute automatically
+
+4. **Enjoy the interface**
+   - The complete interface with detected unfollowers will be displayed
+
+### 📱 For iOS (Safari)
+
+<img src="./assets/addingToBookmarks.gif" alt="Adding bookmarklet to Safari bookmarks on iOS" />
+
+1. **Tap and hold the link**
+   - Tap and hold the "Enhanced Instagram Unfollowers" button until a menu appears
+
+2. **Drag to bookmarks**
+   - Without releasing, drag the link to the Safari bookmarks bar at the bottom
+   - Release to save as a bookmarklet
+
+3. **Use the bookmarklet**
+   - Open Instagram in Safari and wait for it to load completely
+   - Tap the bookmarklet in your bookmarks bar
+   - The tool will execute and display the unfollowers interface!
+
+<img src="./assets/iosUsage.gif" alt="Using the bookmarklet on iOS Safari" />
+
+### ✨ Bookmarklet Features
+
+- 🎨 **Automatic dark/light theme** - Adapts to your system preferences
+- 🖥️ **Modern and clean interface** - Inspired by Apple design
+- 💻 **Compatible with PC and mobile** - Works on desktop and iOS
+- 🚀 **Fast loading** - Optimized and efficient bookmarklet
+- 🔒 **Private and secure** - Everything runs locally in your browser
+
 ## ⚡ Performance Notes
 
 - Processing time increases with the number of users to check
