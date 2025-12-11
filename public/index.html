@@ -281,6 +281,103 @@
     color: #666666;
     line-height: 1.6;
   }
+
+  .bookmarklets-container {
+    display: flex;
+    flex-direction: column;
+    gap: 3em;
+    width: 100%;
+  }
+
+  .bookmarklet-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2em;
+    padding: 2em;
+    background: linear-gradient(135deg, #f5f5f7 0%, #ffffff 100%);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+
+  .bookmarklet-item-header {
+    text-align: center;
+    width: 100%;
+  }
+
+  .bookmarklet-item-title {
+    margin: 0;
+    font-size: 1.3em;
+    font-weight: 700;
+    color: #1d1d1d;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.5em;
+  }
+
+  .bookmarklet-item-platform {
+    font-size: 0.9em;
+    color: #0071e3;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .bookmarklet-item-instructions {
+    margin: 0;
+    font-size: 0.95em;
+    font-weight: 400;
+    color: #666666;
+    line-height: 1.6;
+    text-align: center;
+    max-width: 85%;
+  }
+
+  .bookmarklet-button {
+    padding: 1em 1.5em;
+    background: linear-gradient(135deg, #0071e3 0%, #0051d5 100%);
+    border: none;
+    border-radius: 12px;
+    color: #FFFFFF;
+    font-size: 1.05em;
+    font-weight: 600;
+    cursor: grab;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.6em;
+    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(0, 113, 227, 0.2);
+    letter-spacing: -0.01em;
+    width: 100%;
+    max-width: 280px;
+    text-decoration: none;
+    display: inline-flex;
+  }
+
+  .bookmarklet-button:hover {
+    background: linear-gradient(135deg, #005cc8 0%, #0043b6 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 113, 227, 0.3);
+    cursor: grab;
+  }
+
+  .bookmarklet-button:active {
+    transform: translateY(0);
+    cursor: grabbing;
+    box-shadow: 0 4px 12px rgba(0, 113, 227, 0.2);
+  }
+
+  .device-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #0071e3 0%, #0051d5 100%);
+    color: #FFFFFF;
+    padding: 0.4em 1em;
+    border-radius: 20px;
+    font-size: 0.75em;
+    font-weight: 600;
+    margin-top: 0.8em;
+    letter-spacing: -0.01em;
+  }
 </style>
 
 <body>
@@ -314,47 +411,60 @@
 
       <div class="bookmarklet-section">
         <h3>Or use a Bookmarklet</h3>
-        <p class="instructions">Drag this button to your bookmarks bar. Then, go to Instagram and click it to run.</p>
-        <a id="bookmarklet-link" class="copy-button" href="#">
-          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M5 2H19C19.5523 2 20 2.44772 20 3V22.1433C20 22.4382 19.823 22.7052 19.5521 22.822C19.2812 22.9388 18.9697 22.8943 18.7496 22.7061L12.75 17.5678C12.3499 17.225 11.6501 17.225 11.25 17.5678L5.25044 22.7061C5.03027 22.8943 4.71881 22.9388 4.44789 22.822C4.17702 22.7052 4 22.4382 4 22.1433V3C4 2.44772 4.44772 2 5 2Z"
-              fill="#FFFFFF" />
-          </svg>
-          Bookmarklet
-        </a>
+        <div class="bookmarklets-container">
+          <!-- Desktop/PC Bookmarklet -->
+          <div class="bookmarklet-item">
+            <div class="bookmarklet-item-header">
+              <h4 class="bookmarklet-item-title">Bookmarklet</h4>
+              <span class="bookmarklet-item-platform">💻 PC / Windows / Mac</span>
+            </div>
+            <p class="bookmarklet-item-instructions">Drag the link below to your bookmarks bar. Then press it when
+              Instragram has finished loading.</p>
+            <span class="bookmarklet-item-platform">📱 iOS / iPhone / iPad</span>
+            <p class="bookmarklet-item-instructions">Tap and hold the link below to add a bookmark (or drag to bookmarks
+              bar). Then tap it when Instagram has finished loading.</p>
+            <a id="bookmarklet-link" class="bookmarklet-button" href="#" draggable="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M5 2H19C19.5523 2 20 2.44772 20 3V22.1433C20 22.4382 19.823 22.7052 19.5521 22.822C19.2812 22.9388 18.9697 22.8943 18.7496 22.7061L12.75 17.5678C12.3499 17.225 11.6501 17.225 11.25 17.5678L5.25044 22.7061C5.03027 22.8943 4.71881 22.9388 4.44789 22.822C4.17702 22.7052 4 22.4382 4 22.1433V3C4 2.44772 4.44772 2 5 2Z"
+                  fill="#FFFFFF" />
+              </svg>
+              Enhanced Instagram Unfollowers
+            </a>
+            <span class="device-badge">v1.0.0</span>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="confirm-overlay" id="overlay">
-    <div class="confirm-box">
-      <div class="confirm-box__header">
-        <div class="confirm-box__header__text">
-          <svg width="188" height="189" viewBox="0 0 188 189" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M128.332 65.3086H119.721C117.849 65.3086 116.068 66.2082 114.966 67.7504L86.1055 107.774L73.0336 89.6348C71.932 88.1109 70.1695 87.193 68.2785 87.193H59.668C58.4746 87.193 57.777 88.5516 58.4746 89.5246L81.3504 121.25C81.8908 122.004 82.6032 122.618 83.4286 123.042C84.2539 123.466 85.1684 123.688 86.0963 123.688C87.0242 123.688 87.9387 123.466 88.764 123.042C89.5894 122.618 90.3018 122.004 90.8422 121.25L129.507 67.6402C130.223 66.6672 129.525 65.3086 128.332 65.3086Z"
-              fill="white" />
-            <path
-              d="M94 12.25C48.5789 12.25 11.75 49.0789 11.75 94.5C11.75 139.921 48.5789 176.75 94 176.75C139.421 176.75 176.25 139.921 176.25 94.5C176.25 49.0789 139.421 12.25 94 12.25ZM94 162.797C56.2898 162.797 25.7031 132.21 25.7031 94.5C25.7031 56.7898 56.2898 26.2031 94 26.2031C131.71 26.2031 162.297 56.7898 162.297 94.5C162.297 132.21 131.71 162.797 94 162.797Z"
-              fill="white" />
-          </svg>
+    <div class="confirm-overlay" id="overlay">
+      <div class="confirm-box">
+        <div class="confirm-box__header">
+          <div class="confirm-box__header__text">
+            <svg width="188" height="189" viewBox="0 0 188 189" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M128.332 65.3086H119.721C117.849 65.3086 116.068 66.2082 114.966 67.7504L86.1055 107.774L73.0336 89.6348C71.932 88.1109 70.1695 87.193 68.2785 87.193H59.668C58.4746 87.193 57.777 88.5516 58.4746 89.5246L81.3504 121.25C81.8908 122.004 82.6032 122.618 83.4286 123.042C84.2539 123.466 85.1684 123.688 86.0963 123.688C87.0242 123.688 87.9387 123.466 88.764 123.042C89.5894 122.618 90.3018 122.004 90.8422 121.25L129.507 67.6402C130.223 66.6672 129.525 65.3086 128.332 65.3086Z"
+                fill="white" />
+              <path
+                d="M94 12.25C48.5789 12.25 11.75 49.0789 11.75 94.5C11.75 139.921 48.5789 176.75 94 176.75C139.421 176.75 176.25 139.921 176.25 94.5C176.25 49.0789 139.421 12.25 94 12.25ZM94 162.797C56.2898 162.797 25.7031 132.21 25.7031 94.5C25.7031 56.7898 56.2898 26.2031 94 26.2031C131.71 26.2031 162.297 56.7898 162.297 94.5C162.297 132.21 131.71 162.797 94 162.797Z"
+                fill="white" />
+            </svg>
 
-          Code copied!
+            Code copied!
+          </div>
         </div>
-      </div>
-      <div class="confirm-box__close">
-        <button onclick="overlayControl('hide')">Close</button>
-      </div>
-      <div class="confirm-box__body">
-        <div class="confirm-box__body__text">
-          You can now paste the code in the console of your browser.
+        <div class="confirm-box__close">
+          <button onclick="overlayControl('hide')">Close</button>
         </div>
-        <div class="confirm-box__body__text">
-          <b>Make sure you are on the Instagram website before pasting the code.</b>
+        <div class="confirm-box__body">
+          <div class="confirm-box__body__text">
+            You can now paste the code in the console of your browser.
+          </div>
+          <div class="confirm-box__body__text">
+            <b>Make sure you are on the Instagram website before pasting the code.</b>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 </body>
 <script>
   const scriptLabel = document.getElementById("code");
