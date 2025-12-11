@@ -13,14 +13,11 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap"
-    rel="stylesheet">
 </head>
 
 <style>
   * {
-    font-family: "Comic Neue", serif !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Roboto, "Noto Sans", sans-serif !important;
   }
 
   body {
@@ -31,7 +28,7 @@
     flex-direction: column;
     margin: 0;
     min-height: 100vh;
-    background-color: #111;
+    background: linear-gradient(135deg, #f5f5f7 0%, #ffffff 100%);
     padding: 2em 1em;
     box-sizing: border-box;
   }
@@ -46,17 +43,24 @@
   }
 
   code {
-    font-weight: 800;
+    font-weight: 500;
     user-select: none;
     pointer-events: none;
+    color: #1d1d1d;
+    font-family: "Monaco", "Courier New", monospace;
   }
 
   .codeBox {
     width: 100%;
-    font-size: 10px;
+    font-size: 11px;
     user-select: none;
     margin: 0 auto;
     margin-top: 20px;
+    background-color: #f5f5f7;
+    border-radius: 12px;
+    padding: 1.5em;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   }
 
   .codeBox code {
@@ -64,30 +68,40 @@
   }
 
   .copy-button {
-    padding: 0.6em 1em;
+    padding: 0.8em 1.5em;
     width: 100%;
     max-width: 320px;
     color: #FFFFFF;
-    background-color: #222;
+    background: linear-gradient(135deg, #0071e3 0%, #0051d5 100%);
     border: none;
-    border-radius: 1em;
-    font-size: 2em;
+    border-radius: 12px;
+    font-size: 1.1em;
+    font-weight: 600;
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 0.5em;
-    transition-duration: 500ms;
+    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
     text-decoration: none;
     box-sizing: border-box;
+    box-shadow: 0 4px 12px rgba(0, 113, 227, 0.2);
+    letter-spacing: -0.01em;
   }
 
   .copy-button:hover {
-    background-color: #333;
+    background: linear-gradient(135deg, #005cc8 0%, #0043b6 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 113, 227, 0.3);
+  }
+
+  .copy-button:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 12px rgba(0, 113, 227, 0.2);
   }
 
   .white {
-    color: white;
+    color: #1d1d1d;
   }
 
   .container {
@@ -102,10 +116,9 @@
   }
 
   .container header {
-    font-family: "Comic Neue", serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Roboto, "Noto Sans", sans-serif;
     font-weight: 700;
-    font-style: italic;
-    color: #FFFFFF;
+    color: #1d1d1d;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -114,16 +127,21 @@
   }
 
   .logo-text {
-    font-size: 2em;
+    font-size: 2.2em;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    letter-spacing: -0.02em;
+  }
+
+  .logo-text span {
+    line-height: 1.2;
   }
 
   .container header>.text {
     font-size: 2em;
-    color: white;
+    color: #1d1d1d;
   }
 
   .confirm-overlay {
@@ -139,8 +157,10 @@
     z-index: 100;
     pointer-events: none;
     opacity: 0;
-    transition-duration: 100ms;
-    background-color: #38d1d1;
+    transition-duration: 200ms;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     padding: 1em;
     box-sizing: border-box;
   }
@@ -157,6 +177,11 @@
     flex-direction: column;
     gap: 2em;
     text-align: center;
+    background-color: #FFFFFF;
+    border-radius: 20px;
+    padding: 2.5em;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    max-width: 400px;
   }
 
   .confirm-box__header {
@@ -168,8 +193,8 @@
   }
 
   .confirm-box__header__text {
-    font-size: 2em;
-    color: white;
+    font-size: 1.8em;
+    color: #1d1d1d;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -185,23 +210,29 @@
   }
 
   .confirm-box__close button {
-    padding: 0.4em 1em;
+    padding: 0.6em 1.5em;
     max-width: 320px;
-    background-color: #FFFFFF;
+    background-color: #f5f5f7;
     border: none;
-    border-radius: 4px;
-    font-size: 1.25em;
-    color: #111111;
+    border-radius: 10px;
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #1d1d1d;
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 0.5em;
-    transition-duration: 100ms;
+    transition: all 200ms ease;
   }
 
   .confirm-box__close button:hover {
-    background-color: #F2F2F2;
+    background-color: #ebebf0;
+    transform: translateY(-2px);
+  }
+
+  .confirm-box__close button:active {
+    transform: translateY(0);
   }
 
   .confirm-box__body {
@@ -210,10 +241,11 @@
     align-items: center;
     flex-direction: column;
     gap: 1em;
+    color: #1d1d1d;
   }
 
   pre {
-    border-radius: 1em;
+    border-radius: 12px;
     overflow: hidden !important;
   }
 
@@ -223,27 +255,31 @@
 
   .bookmarklet-section {
     text-align: center;
-    color: white;
+    color: #1d1d1d;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1em;
-    margin-top: 1em;
-    border-top: 2px solid #333;
+    gap: 1.5em;
+    margin-top: 2em;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
     padding-top: 2em;
     width: 100%;
   }
 
   .bookmarklet-section h3 {
     margin: 0;
-    font-size: 1.8em;
+    font-size: 1.5em;
+    font-weight: 700;
+    letter-spacing: -0.01em;
   }
 
   .instructions {
     margin: 0;
     max-width: 90%;
-    font-size: 1.2em;
-    font-weight: 300;
+    font-size: 1em;
+    font-weight: 400;
+    color: #666666;
+    line-height: 1.6;
   }
 </style>
 
