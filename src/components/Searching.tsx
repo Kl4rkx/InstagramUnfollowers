@@ -54,15 +54,6 @@ export const Searching = ({
         <div 
           className="sidebar-backdrop" 
           onClick={() => setSidebarOpen(false)}
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            zIndex: 98,
-            display: 'none'
-          }}
         />
       )}
       <aside className={`app-sidebar ${sidebarOpen ? 'active' : ''}`}>

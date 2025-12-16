@@ -29,6 +29,12 @@ html {
             flex: 1;
             overflow: hidden;
             width: 100%;
+            // Fix: Add margin-top to account for fixed header
+            margin-top: 7rem;
+
+            @include variables.respond-to("tablet") {
+                margin-top: 4rem;
+            }
 
             // Mobile: Stack sidebar on top, use drawer behavior
             @media (max-width: #{variables.$tablet - 1px}) {
@@ -189,6 +195,7 @@ html {
             top: 7rem;
             left: -280px;
             height: calc(100vh - 7rem);
+            max-height: calc(100vh - 7rem);
             width: 280px;
             background-color: variables.$bg-primary;
             border-right: 1px solid #333;
@@ -201,6 +208,8 @@ html {
             z-index: 100;
             transition: left 0.3s ease;
             box-shadow: 2px 0 8px rgba(0, 0, 0, 0.5);
+            // Fix: iOS smooth scrolling for sidebar
+            -webkit-overflow-scrolling: touch;
 
             // Mobile: Show when active
             &.active {
@@ -471,9 +480,15 @@ html {
             width: 100%;
             display: flex;
             flex-direction: column;
+            // Fix: Explicit height for mobile to enable proper scrolling
+            // Without this, mobile devices don't calculate the available height correctly
+            height: calc(100vh - 7rem);
+            max-height: calc(100vh - 7rem);
 
             @include variables.respond-to("tablet") {
                 width: calc(100% - 280px);
+                height: calc(100vh - 4rem);
+                max-height: calc(100vh - 4rem);
             }
 
             .tabs-container {
@@ -485,6 +500,10 @@ html {
                 flex: 1;
                 overflow-y: auto;
                 overflow-x: hidden;
+                // Fix: Explicit height and webkit-overflow-scrolling for iOS smooth scrolling
+                // This ensures the scrollable area is properly defined on mobile
+                height: 100%;
+                -webkit-overflow-scrolling: touch;
             }
         }
 
