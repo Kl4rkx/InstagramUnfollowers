@@ -215,6 +215,7 @@ export const Toolbar = ({
           setTimings={setTimings}
           whitelistedUsers={whitelistedUsers}
           onWhitelistUpdate={onWhitelistUpdate}
+          t={t}
         ></SettingMenu>
       }
 

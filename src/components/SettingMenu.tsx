@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Timings } from "../model/timings";
 import { UserNode } from "../model/user";
 import { WhitelistManager } from "./WhitelistManager";
+import { TranslationKey } from "../constants/translations";
 
 interface SettingMenuProps {
   setSettingState: (state: boolean) => void;
@@ -9,6 +10,7 @@ interface SettingMenuProps {
   setTimings: (timings: Timings) => void;
   whitelistedUsers: readonly UserNode[];
   onWhitelistUpdate: (users: readonly UserNode[]) => void;
+  t: (key: TranslationKey, replacements?: Record<string, string | number>) => string;
 }
 
 export const SettingMenu = ({
@@ -17,6 +19,7 @@ export const SettingMenu = ({
   setTimings,
   whitelistedUsers,
   onWhitelistUpdate,
+  t,
 }: SettingMenuProps) => {
   const [timeBetweenSearchCycles, setTimeBetweenSearchCycles] = useState(currentTimings.timeBetweenSearchCycles);
   const [timeToWaitAfterFiveSearchCycles, setTimeToWaitAfterFiveSearchCycles] = useState(currentTimings.timeToWaitAfterFiveSearchCycles);
@@ -48,12 +51,12 @@ export const SettingMenu = ({
           {/* Settings Module */}
           <div className="settings-module">
             <div className="module-header">
-              <h3>Settings</h3>
+              <h3>{t("settings")}</h3>
             </div>
 
             <div className="settings-content">
               <div className="row">
-                <label className="minimun-width">Default time between search cycles</label>
+                <label className="minimun-width">{t("defaultTimeBetweenSearchCycles")}</label>
                 <input
                   type="number"
                   id="searchCycles"
@@ -67,7 +70,7 @@ export const SettingMenu = ({
               </div>
 
               <div className="row">
-                <label className="minimun-width">Default time to wait after five search cycles</label>
+                <label className="minimun-width">{t("defaultTimeAfterFiveSearchCycles")}</label>
                 <input
                   type="number"
                   id="fiveSearchCycles"
@@ -81,7 +84,7 @@ export const SettingMenu = ({
               </div>
 
               <div className="row">
-                <label className="minimun-width">Default time between unfollows</label>
+                <label className="minimun-width">{t("defaultTimeBetweenUnfollows")}</label>
                 <input
                   type="number"
                   id="timeBetweenUnfollow"
@@ -95,7 +98,7 @@ export const SettingMenu = ({
               </div>
 
               <div className="row">
-                <label className="minimun-width">Default time to wait after five unfollows</label>
+                <label className="minimun-width">{t("defaultTimeAfterFiveUnfollows")}</label>
                 <input
                   type="number"
                   id="timeAfterFiveUnfollows"
@@ -109,8 +112,8 @@ export const SettingMenu = ({
               </div>
 
               <div className="warning-container">
-                <h3 className="warning"><b>WARNING:</b> Modifying these settings can lead to your account being banned.</h3>
-                <h3 className="warning">USE IT AT YOUR OWN RISK!!!!</h3>
+                <h3 className="warning"><b>{t("warningTitle")}:</b> {t("warningMessage")}</h3>
+                <h3 className="warning">{t("warningDisclaimer")}</h3>
               </div>
             </div>
           </div>
@@ -123,13 +126,14 @@ export const SettingMenu = ({
             <WhitelistManager
               whitelistedUsers={whitelistedUsers}
               onWhitelistUpdate={onWhitelistUpdate}
+              t={t}
             />
           </div>
 
           {/* Action Buttons */}
           <div className="btn-container">
-            <button className="btn" type="button" onClick={() => setSettingState(false)}>Cancel</button>
-            <button className="btn" type="submit">Save</button>
+            <button className="btn" type="button" onClick={() => setSettingState(false)}>{t("cancel")}</button>
+            <button className="btn" type="submit">{t("save")}</button>
           </div>
         </div>
       </div>
