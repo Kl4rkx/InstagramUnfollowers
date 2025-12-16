@@ -30,7 +30,8 @@ html {
             overflow: hidden;
             width: 100%;
             // Fix: Add margin-top to account for fixed header
-            margin-top: 7rem;
+            // Mobile needs more space for multi-line header (language selector + controls)
+            margin-top: 9rem;
 
             @include variables.respond-to("tablet") {
                 margin-top: 4rem;
@@ -358,10 +359,10 @@ html {
         .app-sidebar {
             // Mobile: Hidden drawer behavior (will need JS toggle)
             position: fixed;
-            top: 7rem;
+            top: 9rem;
             left: -280px;
-            height: calc(100vh - 7rem);
-            max-height: calc(100vh - 7rem);
+            height: calc(100vh - 9rem);
+            max-height: calc(100vh - 9rem);
             width: 280px;
             background-color: variables.$bg-primary;
             border-right: 1px solid #333;
@@ -648,8 +649,8 @@ html {
             flex-direction: column;
             // Fix: Explicit height for mobile to enable proper scrolling
             // Without this, mobile devices don't calculate the available height correctly
-            height: calc(100vh - 7rem);
-            max-height: calc(100vh - 7rem);
+            height: calc(100vh - 9rem);
+            max-height: calc(100vh - 9rem);
 
             @include variables.respond-to("tablet") {
                 width: calc(100% - 280px);
