@@ -13,10 +13,12 @@
 }
 
 .with-app-header {
-  padding-top: 7rem !important;
+  // Fix: Removed padding-top as it conflicts with explicit height calculation
+  // The parent container already accounts for the header height
+  padding-top: 0 !important;
 
   @include variables.respond-to("tablet") {
-    padding-top: 4rem !important;
+    padding-top: 0 !important;
   }
 }
 
