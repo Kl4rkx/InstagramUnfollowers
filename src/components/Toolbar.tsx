@@ -6,6 +6,8 @@ import { SettingIcon } from "./icons/SettingIcon";
 import { Timings } from "../model/timings";
 import { Logo } from "./icons/Logo";
 import { UserNode } from "../model/user";
+import { Language, TranslationKey } from "../constants/translations";
+import { LanguageSelector } from "./LanguageSelector";
 
 interface ToolBarProps {
   isActiveProcess: boolean;
@@ -19,6 +21,9 @@ interface ToolBarProps {
   onWhitelistUpdate: (users: readonly UserNode[]) => void;
   sidebarOpen: boolean;
   setSidebarOpen: (open: boolean) => void;
+  language: Language;
+  setLanguage: (lang: Language) => void;
+  t: (key: TranslationKey, replacements?: Record<string, string | number>) => string;
 }
 
 export const Toolbar = ({
@@ -33,6 +38,9 @@ export const Toolbar = ({
   onWhitelistUpdate,
   sidebarOpen,
   setSidebarOpen,
+  language,
+  setLanguage,
+  t,
 }: ToolBarProps) => {
 
   const [setingMenu, setSettingMenu] = useState(false);
@@ -50,8 +58,8 @@ export const Toolbar = ({
         <button
           className="menu-toggle"
           onClick={() => setSidebarOpen(!sidebarOpen)}
-          title="Toggle menu"
-          aria-label="Toggle menu"
+          title={t("toggleMenu")}
+          aria-label={t("toggleMenu")}
         >
           ☰
         </button>
@@ -64,7 +72,7 @@ export const Toolbar = ({
             }
             switch (state.status) {
               case "initial":
-                if (confirm("Go back to Instagram?")) {
+                if (confirm(t("goBackToInstagram"))) {
                   location.reload();
                 }
                 break;
@@ -108,15 +116,16 @@ export const Toolbar = ({
           }}
           disabled={state.status === "initial"}
         >
-          Copy List
+          {t("copyList")}
         </button>
         {
           state.status === "initial" && <SettingIcon onClickLogo={() => { setSettingMenu(true); }} />
         }
+        <LanguageSelector currentLanguage={language} onLanguageChange={setLanguage} />
         <input
           type="text"
           className="search-bar"
-          placeholder="Search..."
+          placeholder={t("search")}
           disabled={state.status === "initial"}
           value={state.status === "initial" ? "" : state.searchTerm}
           onChange={e => {
@@ -163,8 +172,7 @@ export const Toolbar = ({
               onChange={toggleCurrentePageUsers}
             />
             <span className="select-control__label">
-              Seleccionar página
-              <span className="select-control__label--muted"> / Select page</span>
+              {t("selectPage")}
             </span>
           </label>
         )}
@@ -194,8 +202,7 @@ export const Toolbar = ({
               onChange={toggleAllUsers}
             />
             <span className="select-control__label">
-              Seleccionar todo
-              <span className="select-control__label--muted"> / Select all</span>
+              {t("selectAll")}
             </span>
           </label>
         )}

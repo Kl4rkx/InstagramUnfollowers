@@ -3,6 +3,7 @@ import { assertUnreachable, getCurrentPageUnfollowers, getMaxPage, getUsersForDi
 import { State } from "../model/state";
 import { UserNode } from "../model/user";
 import { WHITELISTED_RESULTS_STORAGE_KEY } from "../constants/constants";
+import { TranslationKey } from "../constants/translations";
 
 
 export interface SearchingProps {
@@ -16,6 +17,7 @@ export interface SearchingProps {
   UserUncheckIcon: React.FC;
   sidebarOpen: boolean;
   setSidebarOpen: (open: boolean) => void;
+  t: (key: TranslationKey, replacements?: Record<string, string | number>) => string;
 }
 
 export const Searching = ({
@@ -29,6 +31,7 @@ export const Searching = ({
   UserUncheckIcon,
   sidebarOpen,
   setSidebarOpen,
+  t,
 }: SearchingProps) => {
   if (state.status !== "scanning") {
     return null;
@@ -65,7 +68,7 @@ export const Searching = ({
           ✕
         </button>
         <menu className="flex column m-clear p-clear">
-          <p>Filter</p>
+          <p>{t("filter")}</p>
           <label className="badge m-small">
             <input
               type="checkbox"
@@ -73,7 +76,7 @@ export const Searching = ({
               checked={state.filter.showNonFollowers}
               onChange={handleScanFilter}
             />
-            &nbsp;Non-Followers
+            &nbsp;{t("nonFollowers")}
           </label>
           <label className="badge m-small">
             <input
@@ -82,7 +85,7 @@ export const Searching = ({
               checked={state.filter.showFollowers}
               onChange={handleScanFilter}
             />
-            &nbsp;Followers
+            &nbsp;{t("followers")}
           </label>
           <label className="badge m-small">
             <input
@@ -91,7 +94,7 @@ export const Searching = ({
               checked={state.filter.showVerified}
               onChange={handleScanFilter}
             />
-            &nbsp;Verified
+            &nbsp;{t("verified")}
           </label>
           <label className="badge m-small">
             <input
@@ -100,7 +103,7 @@ export const Searching = ({
               checked={state.filter.showPrivate}
               onChange={handleScanFilter}
             />
-            &nbsp;Private
+            &nbsp;{t("private")}
           </label>
           <label className="badge m-small">
             <input
@@ -109,14 +112,14 @@ export const Searching = ({
               checked={state.filter.showWithOutProfilePicture}
               onChange={handleScanFilter}
             />
-            &nbsp;Without Profile Picture
+            &nbsp;{t("withoutProfilePicture")}
           </label>
         </menu>
         <div className="sidebar-stats">
-          <p>Displayed: {usersForDisplay.length}</p>
-          <p>Total: {state.results.length}</p>
+          <p>{t("displayed")}: {usersForDisplay.length}</p>
+          <p>{t("total")}: {state.results.length}</p>
           <p className="whitelist-counter">
-            <span className="whitelist-badge">★</span> Whitelisted: {state.whitelistedResults.length}
+            <span className="whitelist-badge">★</span> {t("whitelistedCount")}: {state.whitelistedResults.length}
           </p>
         </div>
         {/* Scan controls */}
@@ -125,11 +128,11 @@ export const Searching = ({
             className="button-control button-pause"
             onClick={pauseScan}
           >
-            {scanningPaused ? "Resume" : "Pause"}
+            {scanningPaused ? t("resume") : t("pause")}
           </button>
         </div>
         <div className="sidebar-pagination">
-          <p>Pages</p>
+          <p>{t("pages")}</p>
           <div className="pagination-controls">
             <a
               onClick={() => {
@@ -165,7 +168,7 @@ export const Searching = ({
         <button
           className="unfollow"
           onClick={() => {
-            if (!confirm("Are you sure?")) {
+            if (!confirm(t("areYouSure"))) {
               return;
             }
             //TODO TEMP until types are properly fixed
@@ -175,7 +178,7 @@ export const Searching = ({
                 return prevState;
               }
               if (prevState.selectedResults.length === 0) {
-                alert("Must select at least a single user to unfollow");
+                alert(t("mustSelectAtLeastOne"));
                 return prevState;
               }
               const newState: State = {
@@ -192,7 +195,7 @@ export const Searching = ({
             });
           }}
         >
-          UNFOLLOW ({state.selectedResults.length})
+          {t("unfollow")} ({state.selectedResults.length})
         </button>
       </aside>
       <article className="results-container">
@@ -210,7 +213,7 @@ export const Searching = ({
               });
             }}
           >
-            Non-Whitelisted
+            {t("nonWhitelisted")}
           </div>
           <div
             className={`tab ${state.currentTab === "whitelisted" ? "tab-active" : ""}`}
@@ -225,7 +228,7 @@ export const Searching = ({
               });
             }}
           >
-            Whitelisted
+            {t("whitelisted")}
           </div>
         </nav>
         <div className="results-list">

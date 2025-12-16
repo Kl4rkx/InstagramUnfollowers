@@ -1,17 +1,19 @@
 import React from "react";
 import { getUnfollowLogForDisplay } from "../utils/utils";
 import { State } from "../model/state";
+import { TranslationKey } from "../constants/translations";
 
 interface UnfollowingProps {
   state: State;
   handleUnfollowFilter: (e: React.ChangeEvent<HTMLInputElement>) => void;
-
+  t: (key: TranslationKey, replacements?: Record<string, string | number>) => string;
 }
 
 export const Unfollowing = (
   {
     state,
     handleUnfollowFilter,
+    t,
   }: UnfollowingProps) => {
 
   if (state.status !== "unfollowing") {
@@ -22,7 +24,7 @@ export const Unfollowing = (
     <section className="flex">
       <aside className="app-sidebar">
         <menu className="flex column grow m-clear p-clear">
-          <p>Filter</p>
+          <p>{t("filter")}</p>
           <label className="badge m-small">
             <input
               type="checkbox"
@@ -30,7 +32,7 @@ export const Unfollowing = (
               checked={state.filter.showSucceeded}
               onChange={handleUnfollowFilter}
             />
-            &nbsp;Succeeded
+            &nbsp;{t("succeeded")}
           </label>
           <label className="badge m-small">
             <input
@@ -39,7 +41,7 @@ export const Unfollowing = (
               checked={state.filter.showFailed}
               onChange={handleUnfollowFilter}
             />
-            &nbsp;Failed
+            &nbsp;{t("failed")}
           </label>
         </menu>
       </aside>
@@ -47,7 +49,7 @@ export const Unfollowing = (
         {state.unfollowLog.length === state.selectedResults.length && (
           <>
             <hr />
-            <div className="fs-large p-medium clr-green">All DONE!</div>
+            <div className="fs-large p-medium clr-green">{t("allDone")}</div>
             <hr />
           </>
         )}
@@ -55,7 +57,7 @@ export const Unfollowing = (
           (entry, index) =>
             entry.unfollowedSuccessfully ? (
               <div className="p-medium" key={entry.user.id}>
-                Unfollowed
+                {t("unfollowed")}
                 <a
                   className="clr-inherit"
                   target="_blank"
@@ -70,7 +72,7 @@ export const Unfollowing = (
               </div>
             ) : (
               <div className="p-medium clr-red" key={entry.user.id}>
-                Failed to unfollow {entry.user.username} [{index + 1}/
+                {t("failedToUnfollow")} {entry.user.username} [{index + 1}/
                 {state.selectedResults.length}]
               </div>
             ),

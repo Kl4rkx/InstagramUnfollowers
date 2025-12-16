@@ -23,6 +23,7 @@ import { Toolbar } from "./components/Toolbar";
 import { Unfollowing } from "./components/Unfollowing";
 import { Timings } from "./model/timings";
 import { loadWhitelist, saveWhitelist } from "./utils/whitelist-manager";
+import { useTranslation } from "./hooks/useTranslation";
 
 // pause
 let scanningPaused = false;
@@ -33,6 +34,8 @@ function pauseScan() {
 
 
 function App() {
+  const { language, setLanguage, t } = useTranslation();
+  
   const [state, setState] = useState<State>({
     status: "initial",
   });
@@ -286,12 +289,12 @@ function App() {
         scrollCycle++;
         if (scrollCycle > 6) {
           scrollCycle = 0;
-          setToast({ show: true, text: `Sleeping ${timings.timeToWaitAfterFiveSearchCycles / 1000 } seconds to prevent getting temp blocked` });
+          setToast({ show: true, text: t("sleepingToPreventBlock", { seconds: String(timings.timeToWaitAfterFiveSearchCycles / 1000) }) });
           await sleep(timings.timeToWaitAfterFiveSearchCycles);
         }
         setToast({ show: false });
       }
-      setToast({ show: true, text: "Scanning completed!" });
+      setToast({ show: true, text: t("scanningCompleted") });
     };
     scan();
     // Dependency array not entirely legit, but works this way. TODO: Find a way to fix.
@@ -367,7 +370,7 @@ function App() {
         await sleep(Math.floor(Math.random() * (timings.timeBetweenUnfollows * 1.2 - timings.timeBetweenUnfollows)) + timings.timeBetweenUnfollows);
 
         if (counter % 5 === 0) {
-          setToast({ show: true, text: `Sleeping ${timings.timeToWaitAfterFiveUnfollows / 60000 } minutes to prevent getting temp blocked` });
+          setToast({ show: true, text: t("sleepingMinutesToPreventBlock", { minutes: String(timings.timeToWaitAfterFiveUnfollows / 60000) }) });
           await sleep(timings.timeToWaitAfterFiveUnfollows);
         }
         setToast({ show: false });
@@ -381,7 +384,7 @@ function App() {
   let markup: React.JSX.Element;
   switch (state.status) {
     case "initial":
-      markup = <NotSearching onScan={onScan}></NotSearching>;
+      markup = <NotSearching onScan={onScan} t={t}></NotSearching>;
       break;
 
     case "scanning": {
@@ -396,6 +399,7 @@ function App() {
         UserUncheckIcon={UserUncheckIcon}
         sidebarOpen={sidebarOpen}
         setSidebarOpen={setSidebarOpen}
+        t={t}
       ></Searching>;
       break;
     }
@@ -404,6 +408,7 @@ function App() {
       markup = <Unfollowing
         state={state}
         handleUnfollowFilter={handleUnfollowFilter}
+        t={t}
       ></Unfollowing>;
       break;
 
@@ -426,6 +431,9 @@ function App() {
           onWhitelistUpdate={onWhitelistUpdate}
           sidebarOpen={sidebarOpen}
           setSidebarOpen={setSidebarOpen}
+          language={language}
+          setLanguage={setLanguage}
+          t={t}
         ></Toolbar>
 
         {markup}
