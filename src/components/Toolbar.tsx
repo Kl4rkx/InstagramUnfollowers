@@ -139,49 +139,65 @@ export const Toolbar = ({
           }}
         />
         {state.status === "scanning" && (
-          <input
-            title="Select all on this page"
-            type="checkbox"
-            // Avoid allowing to select all before scan completed to avoid confusion
-            // regarding what exactly is selected while scanning in progress.
-            disabled={state.percentage < 100}
-            checked={
-              (() => {
-                const displayed = getUsersForDisplay(state.results, state.whitelistedResults, state.currentTab, state.searchTerm, state.filter);
-                const pageUsers = getCurrentPageUnfollowers(displayed, state.page);
-                // Fix: Check if pageUsers is not empty and all are selected
-                // Previous logic didn't account for empty page or partial selections correctly
-                return pageUsers.length > 0 && pageUsers.every(u => state.selectedResults.some(s => s.id === u.id));
-              })()
-            }
-            className="toggle-all-checkbox"
-            // Fix: Changed from onClick to onChange for proper React checkbox handling
-            // onClick doesn't trigger reliably for controlled checkboxes
-            onChange={toggleCurrentePageUsers}
-          />
+          <label
+            className="select-control"
+            title="Seleccionar esta página / Select this page"
+          >
+            <input
+              type="checkbox"
+              // Avoid allowing to select all before scan completed to avoid confusion
+              // regarding what exactly is selected while scanning in progress.
+              disabled={state.percentage < 100}
+              checked={
+                (() => {
+                  const displayed = getUsersForDisplay(state.results, state.whitelistedResults, state.currentTab, state.searchTerm, state.filter);
+                  const pageUsers = getCurrentPageUnfollowers(displayed, state.page);
+                  // Fix: Check if pageUsers is not empty and all are selected
+                  // Previous logic didn't account for empty page or partial selections correctly
+                  return pageUsers.length > 0 && pageUsers.every(u => state.selectedResults.some(s => s.id === u.id));
+                })()
+              }
+              className="toggle-all-checkbox"
+              // Fix: Changed from onClick to onChange for proper React checkbox handling
+              // onClick doesn't trigger reliably for controlled checkboxes
+              onChange={toggleCurrentePageUsers}
+            />
+            <span className="select-control__label">
+              Seleccionar página
+              <span className="select-control__label--muted"> / Select page</span>
+            </span>
+          </label>
         )}
         {state.status === "scanning" && (
-          <input
-            title="Select all"
-            type="checkbox"
-            // Avoid allowing to select all before scan completed to avoid confusion
-            // regarding what exactly is selected while scanning in progress.
-            disabled={state.percentage < 100}
-            checked={
-              state.selectedResults.length ===
-              getUsersForDisplay(
-                state.results,
-                state.whitelistedResults,
-                state.currentTab,
-                state.searchTerm,
-                state.filter,
-              ).length
-            }
-            className="toggle-all-checkbox"
-            // Fix: Changed from onClick to onChange for proper React checkbox handling
-            // onClick doesn't trigger reliably for controlled checkboxes
-            onChange={toggleAllUsers}
-          />
+          <label
+            className="select-control"
+            title="Seleccionar todo / Select all"
+          >
+            <input
+              type="checkbox"
+              // Avoid allowing to select all before scan completed to avoid confusion
+              // regarding what exactly is selected while scanning in progress.
+              disabled={state.percentage < 100}
+              checked={
+                state.selectedResults.length ===
+                getUsersForDisplay(
+                  state.results,
+                  state.whitelistedResults,
+                  state.currentTab,
+                  state.searchTerm,
+                  state.filter,
+                ).length
+              }
+              className="toggle-all-checkbox"
+              // Fix: Changed from onClick to onChange for proper React checkbox handling
+              // onClick doesn't trigger reliably for controlled checkboxes
+              onChange={toggleAllUsers}
+            />
+            <span className="select-control__label">
+              Seleccionar todo
+              <span className="select-control__label--muted"> / Select all</span>
+            </span>
+          </label>
         )}
         </div>
       </div>
